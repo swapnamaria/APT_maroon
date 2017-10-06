@@ -11,14 +11,32 @@ handlers:
 - url: /bootstrap
   static_dir: bootstrap
 
+- url: /Content
+  static_dir: Content
+
 - url: /management
   script: management.app
 
 - url: /create_stream
   script: create_stream.app
 
-- url: /.*
+- url: /
   script: login.app
+
+- url: /trending_cron
+  script: trending_cron.app
+
+- url: /blobstore.*
+  script: blob_store_test.app
+
+- url: /searchstream.*
+  script: search_stream.app
+
+- url: /all_stream.*
+  script: all_stream.app
+
+#- url: /blobstore/serviece
+#  script: blob_store_test.app
 # [END handlers]
 
 # [START libraries]

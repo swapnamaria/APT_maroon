@@ -1,33 +1,24 @@
-
 from google.appengine.ext import ndb
-
-
 
 class Photo(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     url = ndb.StringProperty(indexed=True)
-    #photo_id
-    #stream = ndb.ReferenceProperty(Stream)
+    blob_key = ndb.BlobKeyProperty()
 
-class User(ndb.Model):
+class User(ndb.Expando):
     username = ndb.StringProperty(indexed=True)
-    email = ndb.StringProperty(indexed=False)
-    #owned_streams = ndb.StructuredProperty()
+    email = ndb.StringProperty(indexed=True)
+    subscribe_stream = ndb.StringProperty(repeated = True)
 
 class Stream(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     tags = ndb.StringProperty(indexed=True, repeated=True)
     cover_image = ndb.StringProperty(indexed=False)
-    subscribers = ndb.StructuredProperty(User, repeated=True)
+    subscribers = ndb.StringProperty(repeated=True)
     view_count = ndb.IntegerProperty(indexed=True)
     num_pictures = ndb.IntegerProperty()
     last_picture_date = ndb.DateProperty(auto_now=True)
 
-    #photos = ndb.StructuredProperty(Photo, repeated=True)
-    #owner = ndb.ReferenceProperty(User)
-
-
-    #stream_id
-    #photos = []
-
-
+class Trending_stream_entity(ndb.Model):
+    stream_item = ndb.StructuredProperty(Stream, repeated=False)
+    rank = ndb.IntegerProperty(repeated=False)
